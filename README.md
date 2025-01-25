@@ -1,62 +1,51 @@
-<p align="center">
-  <a href="https://roots.io/bedrock/">
-    <img alt="Bedrock" src="https://cdn.roots.io/app/uploads/logo-bedrock.svg" height="100">
-  </a>
-</p>
+# Bedrock for OnePix (BOP)
 
-<p align="center">
-  <a href="https://packagist.org/packages/roots/bedrock">
-    <img alt="Packagist Installs" src="https://img.shields.io/packagist/dt/roots/bedrock?label=projects%20created&colorB=2b3072&colorA=525ddc&style=flat-square">
-  </a>
+A fork of [roots/bedrock](https://github.com/roots/bedrock) tailored for [OnePix](https://github.com/onepixnet).
 
-  <a href="https://packagist.org/packages/roots/wordpress">
-    <img alt="roots/wordpress Packagist Downloads" src="https://img.shields.io/packagist/dt/roots/wordpress?label=roots%2Fwordpress%20downloads&logo=roots&logoColor=white&colorB=2b3072&colorA=525ddc&style=flat-square">
-  </a>
-  
-  <img src="https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/roots/bedrock/master/composer.json&label=wordpress&logo=roots&logoColor=white&query=$.require[%22roots/wordpress%22]&colorB=2b3072&colorA=525ddc&style=flat-square">
+This fork is designed as a foundation for developing WordPress themes and plugins. All project code should be located in the `web/app/{plugins,themes}` directory.
 
-  <a href="https://github.com/roots/bedrock/actions/workflows/ci.yml">
-    <img alt="Build Status" src="https://img.shields.io/github/actions/workflow/status/roots/bedrock/ci.yml?branch=master&logo=github&label=CI&style=flat-square">
-  </a>
+A single BOP-based project can include multiple related themes and plugins under development. In such cases, BOP serves as the foundation for a monorepo. Component code can be included directly in the monorepo or added as Git submodules.
 
-  <a href="https://twitter.com/rootswp">
-    <img alt="Follow Roots" src="https://img.shields.io/badge/follow%20@rootswp-1da1f2?logo=twitter&logoColor=ffffff&message=&style=flat-square">
-  </a>
-</p>
+## Differences from the Original
 
-<p align="center">WordPress boilerplate with Composer, easier configuration, and an improved folder structure</p>
-
-<p align="center">
-  <a href="https://roots.io/bedrock/">Website</a> &nbsp;&nbsp; <a href="https://roots.io/bedrock/docs/installation/">Documentation</a> &nbsp;&nbsp; <a href="https://github.com/roots/bedrock/releases">Releases</a> &nbsp;&nbsp; <a href="https://discourse.roots.io/">Community</a>
-</p>
-
-## Sponsors
-
-Bedrock is an open source project and completely free to use. If you've benefited from our projects and would like to support our future endeavors, please consider [sponsoring Roots](https://github.com/sponsors/roots).
-
-<div align="center">
-<a href="https://carrot.com/"><img src="https://cdn.roots.io/app/uploads/carrot.svg" alt="Carrot" width="120" height="90"></a> <a href="https://wordpress.com/"><img src="https://cdn.roots.io/app/uploads/wordpress.svg" alt="WordPress.com" width="120" height="90"></a> <a href="https://worksitesafety.ca/careers/"><img src="https://cdn.roots.io/app/uploads/worksite-safety.svg" alt="Worksite Safety" width="120" height="90"></a> <a href="https://www.itineris.co.uk/"><img src="https://cdn.roots.io/app/uploads/itineris.svg" alt="Itineris" width="120" height="90"></a> <a href="https://bonsai.so/"><img src="https://cdn.roots.io/app/uploads/bonsai.svg" alt="Bonsai" width="120" height="90"></a> <a href="https://fusepress.co/sp/sign-up/"><img src="https://cdn.roots.io/app/uploads/fusepress.svg" alt="FusePress" width="120" height="90"></a>
-</div>
-
-## Overview
-
-Bedrock is a WordPress boilerplate for developers that want to manage their projects with Git and Composer. Much of the philosophy behind Bedrock is inspired by the [Twelve-Factor App](http://12factor.net/) methodology, including the [WordPress specific version](https://roots.io/twelve-factor-wordpress/).
-
-- Better folder structure
-- Dependency management with [Composer](https://getcomposer.org)
-- Easy WordPress configuration with environment specific files
-- Environment variables with [Dotenv](https://github.com/vlucas/phpdotenv)
-- Autoloader for mu-plugins (use regular plugins as mu-plugins)
-- Enhanced security (separated web root and secure passwords with [wp-password-bcrypt](https://github.com/roots/wp-password-bcrypt))
+- GitHub Actions have been removed since we use GitLab CI.
+- Docker has been added for easy local setup.
+- The Pint package has been removed because each theme or plugin under development includes its own static analysis tools.
 
 ## Getting Started
 
-See the [Bedrock installation documentation](https://roots.io/bedrock/docs/installation/).
+### Basic Setup
 
-## Stay Connected
+1. Run `composer create-project onepix/bedrock` to install BOP.
+2. Create an `.env` file by running `cp .env.example .env`.
+3. Update the required variables in the `.env` file.
+4. Start Docker with `docker-compose up -d`.
 
-- Join us on Discord by [sponsoring us on GitHub](https://github.com/sponsors/roots)
-- Participate on [Roots Discourse](https://discourse.roots.io/)
-- Follow [@rootswp on Twitter](https://twitter.com/rootswp)
-- Read the [Roots Blog](https://roots.io/blog/)
-- Subscribe to the [Roots Newsletter](https://roots.io/newsletter/)
+### Adding a Theme Under Development
+
+1. Copy your theme directory into `web/app/themes`, or start developing a theme based on our template [onepix/wordpress-template](https://github.com/onepixnet/wordpress-template).
+2. Add the theme directory to the `.gitignore` file under the section "Themes under development".
+3. Commit the new code to the monorepo.
+
+### Adding a Plugin Under Development
+
+1. Copy your plugin directory into `web/app/plugins`, or start developing a plugin based on our template [onepix/wordpress-template](https://github.com/onepixnet/wordpress-template).
+2. Add the plugin directory to the `.gitignore` file under the section "Plugins under development".
+3. Commit the new code to the monorepo.
+
+### Adding Plugins as Dependencies
+
+To add plugins as project dependencies, use Composer and [WPackagist](https://wpackagist.org/). WPackagist is already configured in the project's `composer.json`. All plugins installed this way will automatically be placed in the `web/app/plugins` directory.
+
+You can find available plugins on the [WPackagist search page](https://wpackagist.org/search). For example, to install the WooCommerce plugin, run: `composer require wpackagist-plugin/woocommerce`
+
+This will:
+1. Add the plugin to `composer.json`.
+2. Install it.
+3. Place it in the `web/app/plugins/woocommerce` directory.
+
+### Adding Themes as Dependencies
+
+The process for adding themes is the same as for plugins. By default, the latest official WordPress theme is installed, but you can choose another theme if you're not developing your own.
+
+This is especially useful when developing WooCommerce plugins. For example, you can install the official WooCommerce theme "Storefront" alongside the WooCommerce plugin by running: `composer require wpackagist-theme/storefront`
