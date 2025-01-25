@@ -7,9 +7,14 @@ services:
     container_name: "${COMPOSE_PROJECT_NAME}-php"
     restart: always
     environment:
-      WP_CLI_ALLOW_ROOT: 1
       HISTFILE: /root/history/.history
       ENV: /root/.bashrc
+      WP_CLI_ALLOW_ROOT: 1
+      WP_HOME: ${WP_HOME}
+      WP_TITLE: ${WP_TITLE}
+      WP_ADMIN_USER: ${WP_ADMIN_USER}
+      WP_ADMIN_PASSWORD: ${WP_ADMIN_PASSWORD}
+      WP_ADMIN_EMAIL: ${WP_ADMIN_EMAIL}
     volumes:
       - .:/var/www/html:cached
       - php_socket:/var/run/php
