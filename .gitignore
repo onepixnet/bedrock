@@ -8,6 +8,12 @@ web/app/uploads/*
 !web/app/uploads/.gitkeep
 web/app/cache/*
 
+#Themes under development
+#!web/app/themes/example
+
+#Plugins under development
+#!web/app/themes/example
+
 #Docker
 /data
 
