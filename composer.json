@@ -1,28 +1,12 @@
 {
-  "name": "roots/bedrock",
+  "name": "onepix/bedrock",
   "type": "project",
   "license": "MIT",
-  "description": "WordPress boilerplate with Composer, easier configuration, and an improved folder structure",
-  "homepage": "https://roots.io/bedrock/",
-  "authors": [
-    {
-      "name": "Scott Walkinshaw",
-      "email": "scott.walkinshaw@gmail.com",
-      "homepage": "https://github.com/swalkinshaw"
-    },
-    {
-      "name": "Ben Word",
-      "email": "ben@benword.com",
-      "homepage": "https://github.com/retlehs"
-    }
-  ],
+  "description": "OnePix fork of roots/bedrock",
+  "homepage": "https://github.com/onepixnet/bedrock",
   "keywords": [
     "bedrock", "composer", "roots", "wordpress", "wp", "wp-config"
   ],
-  "support": {
-    "issues": "https://github.com/roots/bedrock/issues",
-    "forum": "https://discourse.roots.io/category/bedrock"
-  },
   "repositories": [
     {
       "type": "composer",
@@ -39,12 +23,11 @@
     "roots/bedrock-disallow-indexing": "^2.0",
     "roots/wordpress": "6.7.1",
     "roots/wp-config": "1.0.0",
-    "roots/wp-password-bcrypt": "1.2.0",
-    "wpackagist-theme/twentytwentyfive": "^1.0"
+    "roots/wp-password-bcrypt": "1.2.0"
   },
   "require-dev": {
     "roave/security-advisories": "dev-latest",
-    "laravel/pint": "^1.18"
+    "wpackagist-theme/twentytwentyfive": "^1.0"
   },
   "config": {
     "optimize-autoloader": true,
@@ -63,9 +46,5 @@
       "web/app/themes/{$name}/": ["type:wordpress-theme"]
     },
     "wordpress-install-dir": "web/wp"
-  },
-  "scripts": {
-    "lint": "pint --test",
-    "lint:fix": "pint"
   }
 }
