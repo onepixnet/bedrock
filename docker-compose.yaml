@@ -1,0 +1,58 @@
+services:
+  php:
+    build:
+      context: docker/php
+      args:
+        PHP_VERSION: $PHP_VERSION
+    container_name: "${COMPOSE_PROJECT_NAME}-php"
+    restart: always
+    environment:
+      WP_CLI_ALLOW_ROOT: 1
+      HISTFILE: /root/history/.history
+      ENV: /root/.bashrc
+    volumes:
+      - .:/var/www/html:cached
+      - php_socket:/var/run/php
+      - php_history:/root/history
+
+  nginx:
+    image: nginx:stable-alpine
+    container_name: "${COMPOSE_PROJECT_NAME}-nginx"
+    restart: always
+    depends_on:
+      - php
+    volumes:
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
+      - .:/var/www/html:ro
+      - php_socket:/var/run/php
+    ports:
+      - '${APP_PORT}:80'
+
+  database:
+    image: mariadb:11
+    container_name: "${COMPOSE_PROJECT_NAME}-database"
+    restart: "always"
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+      - ./logs/mysql:/var/log/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: "${COMPOSE_PROJECT_NAME}-database-admin"
+    restart: always
+    environment:
+      PMA_HOST: database
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - '${DB_ADMIN_PORT}:80'
+
+volumes:
+  php_history: ~
+  php_socket: ~

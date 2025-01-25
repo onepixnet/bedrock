@@ -8,11 +8,15 @@ web/app/uploads/*
 !web/app/uploads/.gitkeep
 web/app/cache/*
 
+#Docker
+/data
+
 # WordPress
 web/wp
 web/.htaccess
 
 # Logs
+/logs
 *.log
 
 # Dotenv
