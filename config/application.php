@@ -41,7 +41,6 @@ if (file_exists($root_dir . '/.env')) {
 
     $repository = Dotenv\Repository\RepositoryBuilder::createWithNoAdapters()
         ->addAdapter(Dotenv\Repository\Adapter\EnvConstAdapter::class)
-        ->addAdapter(Dotenv\Repository\Adapter\PutenvAdapter::class)
         ->immutable()
         ->make();
 
