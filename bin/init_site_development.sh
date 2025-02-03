@@ -1,0 +1,1 @@
+#!/bin/bash#Plugins#wp plugin activate woocommerce --network
