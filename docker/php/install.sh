@@ -45,3 +45,13 @@ if ! wp core is-installed 2>/dev/null; then
 else
     echo "WordPress is already installed. No need to fix what's not broken! 💪"
 fi
+
+debug_log="/var/www/html/web/app/debug.log"
+if [ ! -f "$debug_log" ]; then
+    touch "$debug_log"
+    echo "File $debug_log created.🚀"
+fi
+
+echo "Write rules to $debug_log added.🎉"
+chown www-data:www-data "$debug_log"
+chmod 664 "$debug_log"
