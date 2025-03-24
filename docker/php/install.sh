@@ -55,3 +55,18 @@ fi
 echo "Write rules to $debug_log added.🎉"
 chown www-data:www-data "$debug_log"
 chmod 664 "$debug_log"
+
+TIMEZONE=$(php -r 'echo date_default_timezone_get();')
+wp option update timezone_string "$TIMEZONE"
+echo "Timezone updated to $TIMEZONE successfully! 🎯"
+
+CRON_COMMAND="* * * * * php /var/www/html/web/wp/wp-cron.php > /dev/null 2>&1"
+if (crontab -l 2>/dev/null | grep -F "$CRON_COMMAND"); then
+    echo "Cron job is already registered! ✅"
+else
+    if (crontab -l 2>/dev/null; echo "$CRON_COMMAND") | crontab -; then
+        echo "Cron job registered successfully! 🎉"
+    else
+        echo "Failed to register the cron job! ❌"
+    fi
+fi
